@@ -26,21 +26,33 @@ exports.upload = function(req, res) {
     let startColumn = range[0].charCodeAt(0);
     let endColumn = range[3].charCodeAt(0);
 
+    // Remove empty lines
+    let cellAddress = String.fromCharCode(startColumn + 1) + startRow;
+    while(!isSomething(worksheet[cellAddress])) {
+      ++startRow;
+      cellAddress = String.fromCharCode(startColumn + 1) + startRow;
+    }
+
     let values = [];
-    if(endRow == 2) {
+    let dataType = '';
+
+    if(endRow - startRow === 1) {
+      dataType = 'unidimensional_datasets';
       for(let column = startColumn; column <= endColumn; ++column) {
-        let keyAddress = String.fromCharCode(column) + 1;
-        let valAddress = String.fromCharCode(column) + 2;
+        let keyAddress = String.fromCharCode(column) + startRow;
+        let valAddress = String.fromCharCode(column) + (startRow + 1);
         values.push({ key: worksheet[keyAddress].v, 
                       val: worksheet[valAddress].v });
       }
     } else {
+      dataType = 'bidimensional_datasets';
       for(let column = startColumn + 1; column <= endColumn; ++column) {
-        let keyAddress = String.fromCharCode(column) + 1;
+        let keyAddress = String.fromCharCode(column) + startRow;
         let val = [];
         for(let row = startRow + 1; row <= endRow; ++row) {
           let subKeyAddress = String.fromCharCode(startColumn) + row;
           let valAddress = String.fromCharCode(column) + row;
+
           val.push({ key: worksheet[subKeyAddress].v, 
                      val: worksheet[valAddress].v });
         }
@@ -51,7 +63,21 @@ exports.upload = function(req, res) {
 
     console.log(values);
 
-    res.json({ id: "1234",
-               values: values });
+    res.json({ dataType: { id: "1234", values: values }});
   })
 };  
+
+exports.descriptions = function(req, res) {
+  Document.find().exec((err, documents) => {
+    if (err) res.status(400).send(err);
+
+    res.json({ dataType: { id: "1234", values: values }});
+  })
+};  
+
+function isSomething(x) {
+  return x !== null && typeof(x) !== 'undefined';
+}
+
+
+
