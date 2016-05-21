@@ -20,7 +20,6 @@ exports.upload = function(req, res) {
     let worksheet = workbook.Sheets[firstSheetName];
 
     let range = worksheet['!ref'];
-    // console.log(range);
     let startRow = parseInt(range[1]);
     let endRow = parseInt(range[4]);
     let startColumn = range[0].charCodeAt(0);
@@ -63,7 +62,7 @@ exports.upload = function(req, res) {
 
     console.log(values);
 
-    res.json({ dataType: { id: "1234", values: values }});
+    res.json({ dataType: { id: "1234", title: firstSheetName, values: values }});
   })
 };  
 
