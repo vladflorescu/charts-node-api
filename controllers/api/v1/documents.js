@@ -37,7 +37,7 @@ exports.upload = function(req, res) {
   let dataDesc = {};
 
   if(endRow - startRow === 1) {
-    dataType = 'unidimensional_dataset';
+    dataType = 'unidimensionalDataset';
     for(let column = startColumn; column <= endColumn; ++column) {
       let keyAddress = String.fromCharCode(column) + startRow;
       let valAddress = String.fromCharCode(column) + (startRow + 1);
@@ -47,12 +47,12 @@ exports.upload = function(req, res) {
 
     Unidata.create({ title: firstSheetName, values: values }, function (err, unidata) {
       if (err) console.log(err);
-      dataDesc[dataType] = { id: unidata._id, title: firstSheetName, values: values };
+      dataDesc[dataType] = { id: unidata._id, title: unidata.title, values: unidata.values };
       res.json(dataDesc);
       console.log(dataDesc);
     });
   } else {
-    dataType = 'bidimensional_dataset';
+    dataType = 'bidimensionalDataset';
     for(let column = startColumn + 1; column <= endColumn; ++column) {
       let keyAddress = String.fromCharCode(column) + startRow;
       let val = [];
@@ -69,7 +69,7 @@ exports.upload = function(req, res) {
 
     Bidata.create({ title: firstSheetName, values: values }, function (err, bidata) {
       if (err) console.log(err);
-      dataDesc[dataType] = { id: bidata._id, title: firstSheetName, values: values };
+      dataDesc[dataType] = { id: bidata._id, title: bidata.title, values: bidata.values };
       res.json(dataDesc);
       console.log(dataDesc);
     });
@@ -83,16 +83,18 @@ exports.descriptions = function(req, res) {
     if (err) res.status(400).send(err);
     let descArray = [];
     unidatas.forEach(unidata => descArray.push({id: unidata._id, title: unidata.title}));
-    dataDesc['unidimensional_dataset'] = descArray;
-  });
+    console.log(descArray);
+    dataDesc['unidimensionalDatasets'] = descArray;
 
-  Bidata.find().exec((err, bidatas) => {
-    if (err) res.status(400).send(err);
-    let descArray = [];
-    bidatas.forEach(bidata => descArray.push({id: bidata._id, title: bidata.title}));
-    dataDesc['bidimensional_dataset'] = descArray;
+    Bidata.find().exec((err, bidatas) => {
+      if (err) res.status(400).send(err);
+      let descArray = [];
+      bidatas.forEach(bidata => descArray.push({id: bidata._id, title: bidata.title}));
+      dataDesc['bidimensionalDatasets'] = descArray;
+
+      res.json(dataDesc);
+    });
   });
-  res.json(dataDesc);
 };  
 
 function isSomething(x) {
