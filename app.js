@@ -10,7 +10,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/node-charts')
 require('./models/example');
-require('./models/document');
+require('./models/unidata');
+require('./models/bidata');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
