@@ -47,7 +47,7 @@ exports.upload = function(req, res) {
 
     Unidata.create({ title: firstSheetName, values: values }, function (err, unidata) {
       if (err) console.log(err);
-      dataDesc[dataType] = { id: unidata.id, title: firstSheetName, values: values };
+      dataDesc[dataType] = { id: unidata._id, title: firstSheetName, values: values };
       res.json(dataDesc);
       console.log(dataDesc);
     });
@@ -69,7 +69,7 @@ exports.upload = function(req, res) {
 
     Bidata.create({ title: firstSheetName, values: values }, function (err, bidata) {
       if (err) console.log(err);
-      dataDesc[dataType] = { id: bidata.id, title: firstSheetName, values: values };
+      dataDesc[dataType] = { id: bidata._id, title: firstSheetName, values: values };
       res.json(dataDesc);
       console.log(dataDesc);
     });
@@ -77,7 +77,19 @@ exports.upload = function(req, res) {
 };  
 
 exports.descriptions = function(req, res) {
+  // let dataType = '';
+  // let dataDesc = {};
 
+  // Unidata.find().exec((err, unidatas) => {
+  //   if (err) res.status(400).send(err);
+  //   dataDesc['unidimensional_dataset'] = [];
+  //   unidatas id: bidata.id, title: firstSheetName, values: values };
+  // });
+  // Bidata.find().exec((err, bidatas) => {
+  //   if (err) res.status(400).send(err);
+
+  // });
+  // res.json({ : examples });
 };  
 
 function isSomething(x) {
