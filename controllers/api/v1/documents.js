@@ -47,7 +47,7 @@ exports.upload = function(req, res) {
 
     Unidata.create({ title: firstSheetName, values: values }, function (err, unidata) {
       if (err) console.log(err);
-      dataDesc[dataType] = unidata;
+      dataDesc[dataType] = { id: unidata.id, title: firstSheetName, values: values };
       res.json(dataDesc);
       console.log(dataDesc);
     });
@@ -69,7 +69,7 @@ exports.upload = function(req, res) {
 
     Bidata.create({ title: firstSheetName, values: values }, function (err, bidata) {
       if (err) console.log(err);
-      dataDesc[dataType] = bidata;
+      dataDesc[dataType] = { id: bidata.id, title: firstSheetName, values: values };
       res.json(dataDesc);
       console.log(dataDesc);
     });
