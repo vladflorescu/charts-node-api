@@ -77,19 +77,22 @@ exports.upload = function(req, res) {
 };  
 
 exports.descriptions = function(req, res) {
-  // let dataType = '';
-  // let dataDesc = {};
+  let dataDesc = {};
 
-  // Unidata.find().exec((err, unidatas) => {
-  //   if (err) res.status(400).send(err);
-  //   dataDesc['unidimensional_dataset'] = [];
-  //   unidatas id: bidata.id, title: firstSheetName, values: values };
-  // });
-  // Bidata.find().exec((err, bidatas) => {
-  //   if (err) res.status(400).send(err);
+  Unidata.find().exec((err, unidatas) => {
+    if (err) res.status(400).send(err);
+    let descArray = [];
+    unidatas.forEach(unidata => descArray.push({id: unidata._id, title: unidata.title}));
+    dataDesc['unidimensional_dataset'] = descArray;
+  });
 
-  // });
-  // res.json({ : examples });
+  Bidata.find().exec((err, bidatas) => {
+    if (err) res.status(400).send(err);
+    let descArray = [];
+    bidatas.forEach(bidata => descArray.push({id: bidata._id, title: bidata.title}));
+    dataDesc['bidimensional_dataset'] = descArray;
+  });
+  res.json(dataDesc);
 };  
 
 function isSomething(x) {
