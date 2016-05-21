@@ -1,10 +1,12 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-var controller = require('../../../controllers/api/v1/documents');
-var _ = require('lodash');
+let express = require('express');
+let router = express.Router();
+let controller = require('../../../controllers/api/v1/documents');
+let _ = require('lodash');
+let multer = require('multer');
 
+router.use(multer().single('file'));
 router.post('/upload', controller.upload);
 
 module.exports = router;
