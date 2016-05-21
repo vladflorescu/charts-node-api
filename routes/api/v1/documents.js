@@ -8,5 +8,6 @@ let multer = require('multer');
 
 router.use(multer().single('file'));
 router.post('/upload', controller.upload);
+      .get('/descriptions', controller.descriptions);
 
 module.exports = router;
