@@ -16,7 +16,7 @@ exports.upload = function(req, res) {
   let workbook = XLSX.read(bstr, {type:"binary"});
   let firstSheetName = workbook.SheetNames[0];
   let worksheet = workbook.Sheets[firstSheetName];
-  console.log(worksheet);
+  // console.log(worksheet);
 
   let range = worksheet['!ref'];
   let startRow = parseInt(range[1]);
@@ -61,7 +61,7 @@ exports.upload = function(req, res) {
         let subKeyAddress = String.fromCharCode(startColumn) + row;
         let valAddress = String.fromCharCode(column) + row;
 
-        console.log(subKeyAddress)
+        // console.log(subKeyAddress)
 
         val.push({ key: worksheet[subKeyAddress].v,
                    val: worksheet[valAddress].v });
