@@ -9,3 +9,11 @@ exports.show = function(req, res) {
     res.json({ id: unidata._id, title: unidata.title, values: unidata.values });
   });
 };
+
+exports.destroy = function(req, res) {
+  Unidata.findOneAndRemove({ _id: req.params.id }, (err, example) => {
+    if (err) res.status(400).send(err);
+
+    res.status(200).send();
+  });
+};
