@@ -9,3 +9,11 @@ exports.show = function(req, res) {
     res.json({ id: bidata._id, title: bidata.title, values: bidata.values });
   });
 };
+
+exports.destroy = function(req, res) {
+  Bidata.findOneAndRemove({ _id: req.params.id }, (err, example) => {
+    if (err) res.status(400).send(err);
+
+    res.status(200).send();
+  });
+};
