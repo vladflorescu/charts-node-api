@@ -12,7 +12,7 @@ exports.index = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Example.findById(req.params.id).then((err, example) => {
+  Example.findById(req.params.id).exec((err, example) => {
     if (err) res.status(400).send(err);
 
     res.json(example);
