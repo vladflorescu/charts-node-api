@@ -17,6 +17,8 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var examples = require('./routes/api/v1/examples.js');
 var documents = require('./routes/api/v1/documents.js');
+let unidimensionalDataset = require('./routes/api/v1/unidimensionalDataset');
+let bidimensionalDataset = require('./routes/api/v1/bidimensionalDataset');
 
 var app = express();
 
@@ -39,6 +41,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/users', users);
 app.use('/api/v1/examples', examples);
 app.use('/api/v1/documents', documents);
+app.use('/api/v1/unidimensionalDataset', unidimensionalDataset);
+app.use('/api/v1/bidimensionalDataset', bidimensionalDataset);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
